@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import InputPost from './InputPost';
 import {
-  ContentsInput,
   PostSection,
   PostSubmit,
   PostSubmitDiv,
-  PostTitle,
-  PostTitleDiv,
   PostWriteDiv,
-  TitleInput,
 } from './styledComponent';
+import WriteTitle from './WriteTitle';
 
-function WritePost(props) {
+const SubmitComponent = React.memo(() => (
+  <PostSubmitDiv>
+    <PostSubmit>작성완료</PostSubmit>
+  </PostSubmitDiv>
+));
+
+const WritePost = (props) => {
   const [inputs, setInputs] = useState({
     title: '',
     contents: '',
   });
   const { title, contents } = inputs;
+  // const { testw, setTestw } = useState('test');
+  const testw = 1;
   const onChange = (e) => {
     const { value, name } = e.target; // 우선 e.target 에서 name 과 value 를 추출
     setInputs({
@@ -26,30 +32,16 @@ function WritePost(props) {
 
   return (
     <PostSection>
-      <PostTitleDiv>
-        <PostTitle>글쓰기</PostTitle>
-      </PostTitleDiv>
+      <WriteTitle testw={testw} />
       <PostWriteDiv>
-        <TitleInput
-          name="title"
-          type="text"
-          placeholder="제목을 입력해주세요. (15자 이내)"
-          value={title}
+        <InputPost
           onChange={onChange}
-        />
-        <ContentsInput
-          name="contents"
-          value={contents}
-          cols="30"
-          rows="10"
-          onChange={onChange}
-        ></ContentsInput>
+          title={title}
+          contents={contents}
+        ></InputPost>
       </PostWriteDiv>
-      <PostSubmitDiv>
-        <PostSubmit>작성완료</PostSubmit>
-      </PostSubmitDiv>
+      <SubmitComponent></SubmitComponent>
     </PostSection>
   );
-}
-
+};
 export default WritePost;

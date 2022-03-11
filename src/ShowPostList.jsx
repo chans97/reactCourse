@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   PostSection,
   PostTitleDiv,
@@ -26,23 +26,25 @@ const initialPostList = [
   { id: 3, title: '학보, 시사N 대학기자상 취재' },
 ];
 
-function ShowPostList() {
+const ShowPostList = ({}) => {
   const [loading, setLoading] = useState(true);
   const [isPost, setIsPost] = useState(false);
   const [postList, setPostList] = useState([]);
 
   const navigate = useNavigate();
-
   const goWrite = () => {
     navigate('/write');
   };
 
-  const addPost = () => {
-    setPostList((postList) => [
-      ...postList,
-      { id: 4, title: '학보, 시사N 대학기자상 취재' },
-    ]);
-  };
+  const addPost = useCallback(() => {
+    setPostList(
+      postList.concat({ id: 4, title: '학보, 시사N 대학기자상 취재' }),
+    );
+    // setPostList((postList) => [
+    //   ...postList,
+    //   { id: 4, title: '학보, 시사N 대학기자상 취재' },
+    // ]);
+  }, [postList]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -51,6 +53,7 @@ function ShowPostList() {
     }, 600);
   }, []);
 
+  console.log('render');
   return (
     <>
       <PostSection>
@@ -98,6 +101,6 @@ function ShowPostList() {
       )}
     </>
   );
-}
+};
 
 export default ShowPostList;

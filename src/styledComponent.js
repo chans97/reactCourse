@@ -246,4 +246,5 @@ export const PostSubmit = styled.div`
   margin-bottom: 5px;
   font-family: 'Black Han Sans', sans-serif;
   font-size: 20px;
+  color: white;
 `;

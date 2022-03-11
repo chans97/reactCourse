@@ -1,8 +1,8 @@
 import { MediaDiv, Main } from './styledComponent';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, GlobalStyles, lightTheme } from './styles';
-import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Slogun from './Slogun';
 import ShowPostList from './ShowPostList';
@@ -13,6 +13,7 @@ import WritePost from './WritePost';
 function App() {
   const [darkMode, setDarkMode] = useState(true);
 
+  const navigate = useNavigate();
   return (
     <>
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
@@ -22,7 +23,11 @@ function App() {
           <Main>
             <Slogun></Slogun>
             <Routes>
-              <Route exact path="/" element={<ShowPostList></ShowPostList>} />
+              <Route
+                exact
+                path="/"
+                element={<ShowPostList navigate={navigate}></ShowPostList>}
+              />
               <Route path="/write" element={<WritePost></WritePost>} />
               <Route path="/post/:postID" element={<ShowPost></ShowPost>} />
             </Routes>
