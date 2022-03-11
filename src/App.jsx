@@ -11,9 +11,9 @@ import ShowPost from './ShowPost';
 import WritePost from './WritePost';
 
 function App() {
+  const APIurl = 'https://reactapitest.pythonanywhere.com/api/';
   const [darkMode, setDarkMode] = useState(true);
 
-  const navigate = useNavigate();
   return (
     <>
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
@@ -26,7 +26,7 @@ function App() {
               <Route
                 exact
                 path="/"
-                element={<ShowPostList navigate={navigate}></ShowPostList>}
+                element={<ShowPostList APIurl={APIurl}></ShowPostList>}
               />
               <Route path="/write" element={<WritePost></WritePost>} />
               <Route path="/post/:postID" element={<ShowPost></ShowPost>} />
