@@ -18,6 +18,7 @@ import {
   faArrowLeft,
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 import EachPost from './EachPost';
 
 const initialPostList = [
@@ -30,6 +31,12 @@ const ShowPostList = ({}) => {
   const [loading, setLoading] = useState(true);
   const [isPost, setIsPost] = useState(false);
   const [postList, setPostList] = useState([]);
+
+  useEffect(() => {
+    axios.get('https://reactapitest.pythonanywhere.com/api/list/?page=1&page_size=10').then(response => {
+      console.log(response);
+    })
+  }, [])
 
   const navigate = useNavigate();
   const goWrite = () => {
