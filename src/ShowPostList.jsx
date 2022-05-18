@@ -21,22 +21,10 @@ import {
 import axios from 'axios';
 import EachPost from './EachPost';
 
-const initialPostList = [
-  { id: 1, title: '학보, 시사N 대학기자상 취재' },
-  { id: 2, title: '학보, 시사N 대학기자상 취재' },
-  { id: 3, title: '학보, 시사N 대학기자상 취재' },
-];
-
-const ShowPostList = ({}) => {
+const ShowPostList = ({apiUrl}) => {
   const [loading, setLoading] = useState(true);
   const [isPost, setIsPost] = useState(false);
   const [postList, setPostList] = useState([]);
-
-  useEffect(() => {
-    axios.get('https://reactapitest.pythonanywhere.com/api/list/?page=1&page_size=10').then(response => {
-      console.log(response);
-    })
-  }, [])
 
   const navigate = useNavigate();
   const goWrite = () => {
@@ -54,10 +42,11 @@ const ShowPostList = ({}) => {
   }, [postList]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setPostList(initialPostList);
+    axios.get(`${apiUrl}list/?page=1&page_size=10`).then(response => {
+      console.log(response.data);
+      setPostList(response.data.results);
       setLoading(false);
-    }, 600);
+    })
   }, []);
 
   console.log('render');
