@@ -106,6 +106,16 @@ const ShowPost = ({apiUrl}) => {
   const replCount = useMemo(() => countRepls(repls), [repls]);
   // const replCount = countRepls(repls);
 
+  const onSubmitRepl = () => {
+    axios.post(`${apiUrl}repl/`, {
+      contents: repl,
+      post: Params.postID,
+    }).then(response => {
+      console.log(response.data);
+      // 새로고침
+    })
+  }
+
   if (!Params.postID) {
     return <PostSection>잘못된 접근입니다.</PostSection>;
   }
@@ -125,7 +135,7 @@ const ShowPost = ({apiUrl}) => {
             value={repl}
             ref={replInput}
           ></ReplInput>
-          <ReplSubmitDiv>
+          <ReplSubmitDiv onClick={onSubmitRepl}>
             <span>입력</span>
           </ReplSubmitDiv>
         </WritereplDiv>
