@@ -30,7 +30,7 @@ function App() {
                 path="/"
                 element={<ShowPostList apiUrl={API_URL}></ShowPostList>}
               />
-              <Route path="/write" element={<WritePost></WritePost>} />
+              <Route path="/write" element={<WritePost apiUrl={API_URL}></WritePost>} />
               <Route path="/post/:postID" element={<ShowPost apiUrl={API_URL}></ShowPost>} />
             </Routes>
           </Main>
