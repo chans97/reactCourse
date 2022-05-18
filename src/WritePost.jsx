@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import InputPost from './InputPost';
 import {
   PostSection,
@@ -31,13 +32,15 @@ const WritePost = ({apiUrl}) => {
     });
   };
 
+  const navigate = useNavigate();
+
   const onSubmit = () => {
     axios.post(`${apiUrl}/posts/`, {
       title: inputs.title,
       contents: inputs.contents,
       repls: [],
-    }).then(response => {
-      console.log(response);
+    }).then(() => {
+      navigate('../');
     })
   }
 
