@@ -66,9 +66,9 @@ const PostAndRepl = React.memo(
         ) : (
           repls &&
           repls.map((element) => (
-            <PostReplDiv key={element.id}>
+            <PostReplDiv key={element}>
               <Replwriter>익명</Replwriter>
-              <Repl>{element.contents}</Repl>
+              <Repl>{element}</Repl>
             </PostReplDiv>
           ))
         )}
@@ -110,9 +110,8 @@ const ShowPost = ({apiUrl}) => {
     axios.post(`${apiUrl}repl/`, {
       contents: repl,
       post: Params.postID,
-    }).then(response => {
-      console.log(response.data);
-      // 새로고침
+    }).then(() => {
+      window.location.reload();
     })
   }
 
