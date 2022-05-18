@@ -23,7 +23,6 @@ import EachPost from './EachPost';
 
 const ShowPostList = ({apiUrl}) => {
   const [loading, setLoading] = useState(true);
-  const [isPost, setIsPost] = useState(false);
   const [postList, setPostList] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState([]);
@@ -33,37 +32,28 @@ const ShowPostList = ({apiUrl}) => {
     navigate('/write');
   };
 
-  const addPost = useCallback(() => {
-    setPostList(
-      postList.concat({ id: 4, title: '학보, 시사N 대학기자상 취재' }),
-    );
-    // setPostList((postList) => [
-    //   ...postList,
-    //   { id: 4, title: '학보, 시사N 대학기자상 취재' },
-    // ]);
-  }, [postList]);
-
-  useEffect(() => {
+  const getPostList = useCallback(() => {
+    setLoading(true);
     axios.get(`${apiUrl}list/?page=${page}&page_size=10`).then(response => {
-      console.log(response.data);
       const lastPage = Math.ceil(response.data.count / 10);
       const tempPages = [];
       for (let i = 1; i <= lastPage; i++) {
         tempPages.push(i);
       }
       setPages(tempPages);
-
+  
       setPostList(response.data.results);
       setLoading(false);
     })
-  }, [page]);
+  });
 
-  console.log('render');
+  useEffect(getPostList, [page]);
+
   return (
     <>
       <PostSection>
         <PostTitleDiv>
-          <CursorDiv onClick={addPost}>
+          <CursorDiv onClick={getPostList}>
             <FontAwesomeIcon icon={faArrowsRotate} />
           </CursorDiv>
           <PostTitle>익명게시판</PostTitle>
@@ -77,7 +67,7 @@ const ShowPostList = ({apiUrl}) => {
               <LoadingImg src={`${process.env.PUBLIC_URL}/img/loading.svg`} />
               {/* loading.io */}
             </LoadingDiv>
-          ) : isPost ? (
+          ) : postList.length === 0 ? (
             <LoadingDiv>아직 기록된 글이 없습니다.</LoadingDiv>
           ) : (
             <ul>
